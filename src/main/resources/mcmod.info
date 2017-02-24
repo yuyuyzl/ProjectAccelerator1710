@@ -1,0 +1,16 @@
+[
+{
+  "modid": "acceleratormod",
+  "name": "Particle Accelerator",
+  "description": "Accelerate something to get UU matter!",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Yuyuyzl"],
+  "credits": "Yuyuyzl and the CappCraft team.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
