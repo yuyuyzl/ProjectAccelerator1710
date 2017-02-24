@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "on=0": { "model": "acceleratormod:Acc_Hull_model_0" },
+    "on=1": { "model": "acceleratormod:Acc_Hull_model_1" }
+  }
+}

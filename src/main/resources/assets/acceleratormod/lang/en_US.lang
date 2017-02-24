@@ -1,0 +1,5 @@
+tile.Acc_MainBlock.name=Accelerator Core
+tile.Acc_Hull.name=Accelerator Hull
+tile.Acc_Energy.name=Accelerator Energy Hatch
+tile.Acc_Fluid.name=Accelerator Fluid Port
+gui.kAcceleration=Factor of the acceleration

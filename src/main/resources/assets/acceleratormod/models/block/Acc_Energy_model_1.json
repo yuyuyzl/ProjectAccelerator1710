@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "down": "acceleratormod:machine_hole_1",
+    "up": "acceleratormod:machine_hole_1",
+    "north": "acceleratormod:machine_hole_1",
+    "south": "acceleratormod:machine_hole_1",
+    "east": "acceleratormod:machine_hole_1",
+    "west": "acceleratormod:machine_hole_1",
+    "particle": "acceleratormod:machine_square_1"
+  }
+}

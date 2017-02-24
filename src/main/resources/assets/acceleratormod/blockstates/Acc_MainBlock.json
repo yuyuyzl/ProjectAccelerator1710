@@ -1,0 +1,13 @@
+{
+  "variants": {
+
+    "dir=0,on=0": { "model": "acceleratormod:Acc_MainBlock_model_0" },
+    "dir=1,on=0": { "model": "acceleratormod:Acc_MainBlock_model_0","y":180 },
+    "dir=2,on=0": { "model": "acceleratormod:Acc_MainBlock_model_0","y":270 },
+    "dir=3,on=0": { "model": "acceleratormod:Acc_MainBlock_model_0","y":90 },
+    "dir=0,on=1": { "model": "acceleratormod:Acc_MainBlock_model_1" },
+    "dir=1,on=1": { "model": "acceleratormod:Acc_MainBlock_model_1","y":180 },
+    "dir=2,on=1": { "model": "acceleratormod:Acc_MainBlock_model_1","y":270 },
+    "dir=3,on=1": { "model": "acceleratormod:Acc_MainBlock_model_1","y":90 }
+  }
+}
