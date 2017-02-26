@@ -90,8 +90,6 @@ key_Boost Key:29
 key_Mode Switch Key:50
 key_Side Inventory Key:46
 key_Hub Expand Key:45
-key_keys.modtutorial.charge:46
-key_keys.modtutorial.release:19
 soundCategory_master:1.0
 soundCategory_music:1.0
 soundCategory_record:1.0
