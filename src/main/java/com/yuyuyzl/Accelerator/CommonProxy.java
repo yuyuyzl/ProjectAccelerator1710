@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
  */
 public class CommonProxy {
 
-    public Block blockAccHull;
     public void preInit(){
 
 
