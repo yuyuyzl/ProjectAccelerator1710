@@ -63,6 +63,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
 .idea
 bkup
 build
