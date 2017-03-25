@@ -1,11 +1,29 @@
-[17:04:59] [main/INFO]: Setting user: Player509
-[17:05:01] [Client thread/INFO]: LWJGL Version: 2.9.1
-[17:05:16] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:acceleratormod, FMLFileResourcePack:IndustrialCraft 2
-[17:05:20] [Sound Library Loader/INFO]: Sound engine started
-[17:05:22] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
-[17:05:22] [Client thread/INFO]: Created: 16x16 textures/items-atlas
-[17:05:22] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:acceleratormod, FMLFileResourcePack:IndustrialCraft 2
-[17:05:25] [Client thread/INFO]: Created: 1024x512 textures/blocks-atlas
-[17:05:26] [Client thread/INFO]: Created: 512x512 textures/items-atlas
-[17:05:26] [Sound Library Loader/INFO]: Sound engine started
-[17:05:39] [Client thread/INFO]: Stopping!
+[13:46:31] [main/INFO]: Setting user: Player667
+[13:46:33] [Client thread/INFO]: LWJGL Version: 2.9.1
+[13:46:51] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Particle Accelerator, FMLFileResourcePack:IndustrialCraft 2, FMLFileResourcePack:BC Robotics, FMLFileResourcePack:BC Factory, FMLFileResourcePack:BC Transport, FMLFileResourcePack:BuildCraft, FMLFileResourcePack:BC Energy, FMLFileResourcePack:BC Silicon, FMLFileResourcePack:BC Builders
+[13:46:57] [Sound Library Loader/INFO]: Sound engine started
+[13:46:58] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
+[13:46:58] [Client thread/INFO]: Created: 16x16 textures/items-atlas
+[13:47:00] [Client thread/INFO]: Reloading ResourceManager: Default, FMLFileResourcePack:Forge Mod Loader, FMLFileResourcePack:Minecraft Forge, FMLFileResourcePack:Particle Accelerator, FMLFileResourcePack:IndustrialCraft 2, FMLFileResourcePack:BC Robotics, FMLFileResourcePack:BC Factory, FMLFileResourcePack:BC Transport, FMLFileResourcePack:BuildCraft, FMLFileResourcePack:BC Energy, FMLFileResourcePack:BC Silicon, FMLFileResourcePack:BC Builders
+[13:47:04] [Client thread/INFO]: Created: 1024x1024 textures/blocks-atlas
+[13:47:04] [Client thread/INFO]: Created: 512x512 textures/items-atlas
+[13:47:05] [Sound Library Loader/INFO]: Sound engine started
+[13:47:09] [Server thread/INFO]: Starting integrated minecraft server version 1.7.10
+[13:47:09] [Server thread/INFO]: Generating keypair
+[13:47:15] [Server thread/INFO]: Preparing start region for level 0
+[13:47:16] [Server thread/INFO]: Changing view distance to 12, from 10
+[13:47:16] [Server thread/INFO]: Player667[local:E:b7379952] logged in with entity id 229 at (197.92282057688442, 4.0, -719.8016288948173)
+[13:47:16] [Server thread/INFO]: Player667 joined the game
+[13:47:17] [Server thread/INFO]: Saving and pausing game...
+[13:47:17] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Overworld
+[13:47:17] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Nether
+[13:47:17] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/The End
+[13:47:24] [Client thread/INFO]: Stopping!
+[13:47:24] [Server thread/INFO]: Stopping server
+[13:47:24] [Server thread/INFO]: Saving players
+[13:47:24] [Server thread/INFO]: Saving worlds
+[13:47:24] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Overworld
+[13:47:24] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/Nether
+[13:47:24] [Server thread/INFO]: Saving chunks for level 'Copy of Copy of New World'/The End
+[13:47:24] [Client Shutdown Thread/INFO]: Stopping server
+[13:47:24] [Client Shutdown Thread/INFO]: Saving players
