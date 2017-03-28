@@ -1,7 +1,0 @@
-tile.AccMachineBlock.name=Accelerator Machine Block
-tile.AccCoreBlock.name=Accelerator Core
-tile.AccHullBlock.name=Accelerator Hull
-tile.AccTunnelBlock.name=Accelerator Tunnel
-tile.AccEnergyBlock.name=Accelerator Energy Port
-tile.AccFluidBlock.name=Accelerator Fluid Port
-itemGroup.accelerator=Project Accelerator
