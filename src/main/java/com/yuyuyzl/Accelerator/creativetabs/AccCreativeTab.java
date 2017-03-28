@@ -19,6 +19,6 @@ public class AccCreativeTab extends CreativeTabs {
 
     @Override
     public Item getTabIconItem() {
-        return Item.getItemFromBlock(AccBlocks.accMainBlock);
+        return Item.getItemFromBlock(AccBlocks.accCoreBlock);
     }
 }

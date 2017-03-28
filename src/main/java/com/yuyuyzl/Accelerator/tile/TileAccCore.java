@@ -1,10 +1,8 @@
 package com.yuyuyzl.Accelerator.tile;
 
 import com.yuyuyzl.Accelerator.Config;
-import com.yuyuyzl.Accelerator.block.AccEnergyBlock;
-import com.yuyuyzl.Accelerator.block.AccFluidBlock;
-import com.yuyuyzl.Accelerator.block.AccMachineHull;
-import com.yuyuyzl.Accelerator.block.AccTunnelBlock;
+import com.yuyuyzl.Accelerator.block.*;
+import net.minecraft.block.Block;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
@@ -24,10 +22,12 @@ public class TileAccCore extends TileEntity{
 
     public int dir;
 
-    private List<Integer> HullPosX=new ArrayList<Integer>(),HullPosY=new ArrayList<Integer>(),HullPosZ=new ArrayList<Integer>();
+    //private List<Integer> HullPosX=new ArrayList<Integer>(),HullPosY=new ArrayList<Integer>(),HullPosZ=new ArrayList<Integer>();
     private List<Integer> EnergyPosX=new ArrayList<Integer>(),EnergyPosY=new ArrayList<Integer>(),EnergyPosZ=new ArrayList<Integer>();
     private List<Integer> FluidPosX=new ArrayList<Integer>(),FluidPosY=new ArrayList<Integer>(),FluidPosZ=new ArrayList<Integer>();
     private List<Integer> TunnelPosX=new ArrayList<Integer>(),TunnelPosY=new ArrayList<Integer>(),TunnelPosZ=new ArrayList<Integer>();
+    private List<Integer> AdvTunnelPosX=new ArrayList<Integer>(),AdvTunnelPosY=new ArrayList<Integer>(),AdvTunnelPosZ=new ArrayList<Integer>();
+    private List<Integer> CoolantPosX=new ArrayList<Integer>(),CoolantPosY=new ArrayList<Integer>(),CoolantPosZ=new ArrayList<Integer>();
 
     private int searchX,searchY,searchZ;
     private int psearchX,psearchY,psearchZ;
@@ -61,9 +61,10 @@ public class TileAccCore extends TileEntity{
             }
             if (posReset == 0) {
                 stat = 0;
+                /*
                 HullPosX.clear();
                 HullPosY.clear();
-                HullPosZ.clear();
+                HullPosZ.clear();*/
                 EnergyPosX.clear();
                 EnergyPosY.clear();
                 EnergyPosZ.clear();
@@ -73,6 +74,12 @@ public class TileAccCore extends TileEntity{
                 FluidPosX.clear();
                 FluidPosY.clear();
                 FluidPosZ.clear();
+                CoolantPosX.clear();
+                CoolantPosY.clear();
+                CoolantPosZ.clear();
+                AdvTunnelPosX.clear();
+                AdvTunnelPosY.clear();
+                AdvTunnelPosZ.clear();
                 storedEnergy=0;
                 storedEnergyInt=0;
                 lastConsumedEnergy=0;
@@ -83,6 +90,7 @@ public class TileAccCore extends TileEntity{
                 psearchX = searchX;
                 psearchY = searchY;
                 psearchZ = searchZ;
+                waitT=100;
                 posReset = -1;
                 return;
             }
@@ -92,21 +100,23 @@ public class TileAccCore extends TileEntity{
                     if (worldObj.getBlock(searchX, searchY, searchZ) instanceof AccTunnelBlock) {
                         int count = 0, px = 0, pz = 0;
                         for (int i = 0; i <= 3; i++) {
-                            if (worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccTunnelBlock) {
+                            Block bls=worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]);
+                            if (bls instanceof AccTunnelBlock) {
                                 if (count == 0) {
                                     px = searchX + dirDeltaX[i];
                                     pz = searchZ + dirDeltaZ[i];
                                 }
                                 count++;
-                            }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccMachineHull){
-                                HullPosX.add(searchX+dirDeltaX[i]);
+                            }else if(bls instanceof AccMachineHull ||
+                                    bls instanceof AccAdvMachineHull){
+                                /*HullPosX.add(searchX+dirDeltaX[i]);
                                 HullPosY.add(searchY);
-                                HullPosZ.add(searchZ+dirDeltaZ[i]);
-                            }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccEnergyBlock){
+                                HullPosZ.add(searchZ+dirDeltaZ[i]);*/
+                            }else if(bls instanceof AccEnergyBlock){
                                 EnergyPosX.add(searchX+dirDeltaX[i]);
                                 EnergyPosY.add(searchY);
                                 EnergyPosZ.add(searchZ+dirDeltaZ[i]);
-                            }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccFluidBlock){
+                            }else if(bls instanceof AccFluidBlock){
                                 FluidPosX.add(searchX+dirDeltaX[i]);
                                 FluidPosY.add(searchY);
                                 FluidPosZ.add(searchZ+dirDeltaZ[i]);
@@ -115,18 +125,20 @@ public class TileAccCore extends TileEntity{
                                 return;
                             }
                         }
-                        if(worldObj.getBlock(searchX, searchY+1, searchZ) instanceof AccMachineHull){
-                            HullPosX.add(searchX);
+                        if(worldObj.getBlock(searchX, searchY+1, searchZ) instanceof AccMachineHull||
+                                worldObj.getBlock(searchX, searchY+1, searchZ) instanceof AccAdvMachineHull){
+                            /*HullPosX.add(searchX);
                             HullPosY.add(searchY+1);
-                            HullPosZ.add(searchZ);
+                            HullPosZ.add(searchZ);*/
                         }else{
                             posReset = 40;
                             return;
                         }
-                        if(worldObj.getBlock(searchX, searchY-1, searchZ) instanceof AccMachineHull){
-                            HullPosX.add(searchX);
-                            HullPosY.add(searchY+1);
-                            HullPosZ.add(searchZ);
+                        if(worldObj.getBlock(searchX, searchY-1, searchZ) instanceof AccMachineHull||
+                                worldObj.getBlock(searchX, searchY-1, searchZ) instanceof AccAdvMachineHull){
+                            /*HullPosX.add(searchX);
+                            HullPosY.add(searchY-1);
+                            HullPosZ.add(searchZ);*/
                         }else{
                             posReset = 40;
                             return;
@@ -154,98 +166,154 @@ public class TileAccCore extends TileEntity{
                     }
                     break;
                 case 1:
-                    int count = 0, px = 0, pz = 0;
-                    for (int i = 0; i <= 3; i++) {
-                        if (worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccTunnelBlock) {
-                            if ((searchX + dirDeltaX[i]!=psearchX)||(searchZ + dirDeltaZ[i]!=psearchZ)) {
-                                px = searchX + dirDeltaX[i];
-                                pz = searchZ + dirDeltaZ[i];
+                    if (worldObj.getBlock(searchX, searchY, searchZ) instanceof AccTunnelBlock) {
+                        int count = 0, px = 0, pz = 0;
+                        for (int i = 0; i <= 3; i++) {
+                            Block bls = worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]);
+                            if (bls instanceof AccTunnelBlock) {
+                                if ((searchX + dirDeltaX[i] != psearchX) || (searchZ + dirDeltaZ[i] != psearchZ)) {
+                                    px = searchX + dirDeltaX[i];
+                                    pz = searchZ + dirDeltaZ[i];
+                                }
+                                count++;
+                            } else if (bls instanceof AccMachineHull ||
+                                    bls instanceof AccAdvMachineHull) {
+                                /*HullPosX.add(searchX + dirDeltaX[i]);
+                                HullPosY.add(searchY);
+                                HullPosZ.add(searchZ + dirDeltaZ[i]);*/
+                            } else if (bls instanceof AccEnergyBlock) {
+                                EnergyPosX.add(searchX + dirDeltaX[i]);
+                                EnergyPosY.add(searchY);
+                                EnergyPosZ.add(searchZ + dirDeltaZ[i]);
+                            } else if (bls instanceof AccFluidBlock) {
+                                FluidPosX.add(searchX + dirDeltaX[i]);
+                                FluidPosY.add(searchY);
+                                FluidPosZ.add(searchZ + dirDeltaZ[i]);
+                            } else if (searchX + dirDeltaX[i] != xCoord || searchZ + dirDeltaZ[i] != zCoord) {
+                                posReset = 40;
+                                return;
                             }
-                            count++;
-                        }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccMachineHull){
-                            HullPosX.add(searchX+dirDeltaX[i]);
-                            HullPosY.add(searchY);
-                            HullPosZ.add(searchZ+dirDeltaZ[i]);
-                        }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccEnergyBlock){
-                            EnergyPosX.add(searchX+dirDeltaX[i]);
-                            EnergyPosY.add(searchY);
-                            EnergyPosZ.add(searchZ+dirDeltaZ[i]);
-                        }else if(worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]) instanceof AccFluidBlock){
-                            FluidPosX.add(searchX+dirDeltaX[i]);
-                            FluidPosY.add(searchY);
-                            FluidPosZ.add(searchZ+dirDeltaZ[i]);
-                        }else if(searchX + dirDeltaX[i]!=xCoord ||searchZ+dirDeltaZ[i]!=zCoord){
+
+                        }
+                        if (worldObj.getBlock(searchX, searchY + 1, searchZ) instanceof AccMachineHull ||
+                                worldObj.getBlock(searchX, searchY + 1, searchZ) instanceof AccAdvMachineHull) {
+                            /*HullPosX.add(searchX);
+                            HullPosY.add(searchY + 1);
+                            HullPosZ.add(searchZ);*/
+                        } else {
                             posReset = 40;
                             return;
                         }
+                        if (worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccMachineHull ||
+                                worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccAdvMachineHull) {
+                            /*HullPosX.add(searchX);
+                            HullPosY.add(searchY - 1);
+                            HullPosZ.add(searchZ);*/
+                        } else {
+                            posReset = 40;
+                            return;
+                        }
+                        if (count != 2) {
+                            System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
+                            posReset = 40;
+                            return;
+                        } else {
+                            TunnelPosX.add(searchX);
+                            TunnelPosY.add(searchY);
+                            TunnelPosZ.add(searchZ);
+                            psearchX = searchX;
+                            psearchY = searchY;
+                            psearchZ = searchZ;
+                            searchX = px;
+                            searchZ = pz;
+                            waitT = 5;
+                            System.out.println("Running @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
+                        }
+                        if (searchX == xCoord + dirDeltaX[dir] && searchZ == zCoord + dirDeltaZ[dir]) {
+                            stat = 3;
+                            searchX = 0;
+                            searchY = 0;
+                            searchZ = 0;
+                            psearchX = 0;
+                            psearchY = 0;
+                            psearchZ = 0;
+                            drag = calculateDrag(TunnelPosX, TunnelPosY, TunnelPosZ);
+                            //System.out.println("Success");
 
-                    }
-                    if(worldObj.getBlock(searchX, searchY+1, searchZ) instanceof AccMachineHull){
-                        HullPosX.add(searchX);
-                        HullPosY.add(searchY+1);
-                        HullPosZ.add(searchZ);
+                        }
                     }else{
-                        posReset = 40;
-                        return;
-                    }
-                    if(worldObj.getBlock(searchX, searchY-1, searchZ) instanceof AccMachineHull){
-                        HullPosX.add(searchX);
-                        HullPosY.add(searchY+1);
-                        HullPosZ.add(searchZ);
-                    }else{
-                        posReset = 40;
-                        return;
-                    }
-                    if (count!=2){
-                        //System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                         posReset=40;
                         return;
-                    }else {
-                        TunnelPosX.add(searchX);
-                        TunnelPosY.add(searchY);
-                        TunnelPosZ.add(searchZ);
-                        psearchX = searchX;
-                        psearchY = searchY;
-                        psearchZ = searchZ;
-                        searchX = px;
-                        searchZ = pz;
-                        waitT=5;
-                        //System.out.println("Running @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                     }
-                    if(searchX==xCoord+dirDeltaX[dir] && searchZ==zCoord+dirDeltaZ[dir]){
-                        stat=3;
-                        searchX=0;
-                        searchY=0;
-                        searchZ=0;
-                        psearchX=0;
-                        psearchY=0;
-                        psearchZ=0;
-                        drag=calculateDrag(TunnelPosX,TunnelPosY,TunnelPosZ);
-                        //System.out.println("Success");
-
-                    }
-
                     break;
                 case 3:
                     if(waitT>0){
                         waitT--;
                     }else {
-                        waitT=5;
+                        waitT=0;
                         searchX=TunnelPosX.get(psearchX%TunnelPosX.size());
                         searchY=TunnelPosY.get(psearchX%TunnelPosY.size());
                         searchZ=TunnelPosZ.get(psearchX%TunnelPosZ.size());
-                        if(!(worldObj.getBlock(searchX,searchY,searchZ)instanceof AccTunnelBlock)){
-                            posReset=40;
+                        if(worldObj.getBlock(searchX,searchY,searchZ)instanceof AccTunnelBlock){
+                            {
+                                int count = 0, px = 0, pz = 0;
+                                for (int i = 0; i <= 3; i++) {
+                                    Block bls = worldObj.getBlock(searchX + dirDeltaX[i], searchY, searchZ + dirDeltaZ[i]);
+                                    if (bls instanceof AccTunnelBlock) {
+                                        if ((searchX + dirDeltaX[i] != psearchX) || (searchZ + dirDeltaZ[i] != psearchZ)) {
+                                            px = searchX + dirDeltaX[i];
+                                            pz = searchZ + dirDeltaZ[i];
+                                        }
+                                        count++;
+                                    } else if (bls instanceof AccMachineHull ||
+                                            bls instanceof AccAdvMachineHull) {
+                                    } else if (bls instanceof AccEnergyBlock) {
 
+                                    } else if (bls instanceof AccFluidBlock) {
+                                    } else if (searchX + dirDeltaX[i] != xCoord || searchZ + dirDeltaZ[i] != zCoord) {
+                                        posReset = 40;
+                                        return;
+                                    }
+
+                                }
+                                if (worldObj.getBlock(searchX, searchY + 1, searchZ) instanceof AccMachineHull ||
+                                        worldObj.getBlock(searchX, searchY + 1, searchZ) instanceof AccAdvMachineHull) {
+
+                                } else {
+                                    posReset = 40;
+                                    return;
+                                }
+                                if (worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccMachineHull ||
+                                        worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccAdvMachineHull) {
+
+                                } else {
+                                    posReset = 40;
+                                    return;
+                                }
+                                if (count != 2) {
+                                    System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
+                                    posReset = 40;
+                                    return;
+                                }
+
+                            }
+                        } else if (worldObj.getBlock(searchX,searchY,searchZ)instanceof AccAdvTunnel){
+                            // TODO: 2017/3/28 do hull check
+                        } else {
+                            posReset=40;
+                            return;
                             //System.out.println("Failed1 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                         }
+                        /*
                         searchX=HullPosX.get(psearchX%HullPosX.size());
                         searchY=HullPosY.get(psearchX%HullPosY.size());
                         searchZ=HullPosZ.get(psearchX%HullPosZ.size());
-                        if(!(worldObj.getBlock(searchX,searchY,searchZ)instanceof AccMachineHull)){
+                        if(!(worldObj.getBlock(searchX,searchY,searchZ)instanceof AccMachineHull||
+                                worldObj.getBlock(searchX,searchY,searchZ)instanceof AccAdvMachineHull)){
                             posReset=40;
                             //System.out.println("Failed2 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                         }
+                        */
                         psearchX++;
                     }
 
@@ -343,15 +411,21 @@ public class TileAccCore extends TileEntity{
         EnergyPosX=toArrayListInt(compound.getIntArray("energyx"));
         EnergyPosY=toArrayListInt(compound.getIntArray("energyy"));
         EnergyPosZ=toArrayListInt(compound.getIntArray("energyz"));
-        HullPosX=toArrayListInt(compound.getIntArray("hullx"));
+        /*HullPosX=toArrayListInt(compound.getIntArray("hullx"));
         HullPosY=toArrayListInt(compound.getIntArray("hully"));
-        HullPosZ=toArrayListInt(compound.getIntArray("hullz"));
+        HullPosZ=toArrayListInt(compound.getIntArray("hullz"));*/
         TunnelPosX=toArrayListInt(compound.getIntArray("tunnelx"));
         TunnelPosY=toArrayListInt(compound.getIntArray("tunnely"));
         TunnelPosZ=toArrayListInt(compound.getIntArray("tunnelz"));
         FluidPosX=toArrayListInt(compound.getIntArray("fluidx"));
         FluidPosY=toArrayListInt(compound.getIntArray("fluidy"));
         FluidPosZ=toArrayListInt(compound.getIntArray("fluidz"));
+        CoolantPosX=toArrayListInt(compound.getIntArray("coolantx"));
+        CoolantPosY=toArrayListInt(compound.getIntArray("coolanty"));
+        CoolantPosZ=toArrayListInt(compound.getIntArray("coolantz"));
+        AdvTunnelPosX=toArrayListInt(compound.getIntArray("advtunnelx"));
+        AdvTunnelPosY=toArrayListInt(compound.getIntArray("advtunnely"));
+        AdvTunnelPosZ=toArrayListInt(compound.getIntArray("advtunnelz"));
         stat=compound.getInteger("stat");
         posReset=compound.getInteger("posreset");
         searchX=compound.getInteger("searchx");
@@ -373,9 +447,9 @@ public class TileAccCore extends TileEntity{
     public void writeToNBT(NBTTagCompound compound) {
         super.writeToNBT(compound);
         compound.setInteger("dirMachine",dir);
-        compound.setIntArray("hullx",tointArray(HullPosX));
+        /*compound.setIntArray("hullx",tointArray(HullPosX));
         compound.setIntArray("hully",tointArray(HullPosY));
-        compound.setIntArray("hullz",tointArray(HullPosZ));
+        compound.setIntArray("hullz",tointArray(HullPosZ));*/
         compound.setIntArray("energyx",tointArray(EnergyPosX));
         compound.setIntArray("energyy",tointArray(EnergyPosY));
         compound.setIntArray("energyz",tointArray(EnergyPosZ));
@@ -385,6 +459,12 @@ public class TileAccCore extends TileEntity{
         compound.setIntArray("fluidx",tointArray(FluidPosX));
         compound.setIntArray("fluidy",tointArray(FluidPosY));
         compound.setIntArray("fluidz",tointArray(FluidPosZ));
+        compound.setIntArray("coolantx",tointArray(CoolantPosX));
+        compound.setIntArray("coolanty",tointArray(CoolantPosY));
+        compound.setIntArray("coolantz",tointArray(CoolantPosZ));
+        compound.setIntArray("advtunnelx",tointArray(AdvTunnelPosX));
+        compound.setIntArray("advtunnely",tointArray(AdvTunnelPosY));
+        compound.setIntArray("advtunnelz",tointArray(AdvTunnelPosZ));
         compound.setInteger("stat",stat);
         compound.setInteger("posreset",posReset);
         compound.setInteger("searchx",searchX);

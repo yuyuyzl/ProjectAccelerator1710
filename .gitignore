@@ -64,8 +64,8 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+.idea/
 
-.idea
-bkup
-build
-eclipse
+bkup/
+
+eclipse/

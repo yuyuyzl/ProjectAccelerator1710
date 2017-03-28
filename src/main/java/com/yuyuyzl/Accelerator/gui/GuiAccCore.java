@@ -27,7 +27,8 @@ public class GuiAccCore extends GuiContainer{
         super.drawGuiContainerForegroundLayer(p_146979_1_, p_146979_2_);
         switch (tileAccCore.stat){
             case 0:
-                this.fontRendererObj.drawString("Tunnel not found.",27,25,0x00ffffff);
+                this.fontRendererObj.drawString("P.A.O.S. V1.0.",27,25,0x00ffffff);
+                this.fontRendererObj.drawString("Now Loading...",27,45,0x00ffffff);
                 break;
             case 1:
                 this.fontRendererObj.drawString("Checking tunnel link.",27,25,0x00ffffff);
@@ -35,12 +36,12 @@ public class GuiAccCore extends GuiContainer{
             case 3:
                 this.fontRendererObj.drawString("Running.",27,25,0x00ffffff);
                 this.fontRendererObj.drawString("Process : "+String.format("% 6.2f",((double)tileAccCore.accProgressInt)/100)+"%",27,35,0x00ffffff);
-                this.fontRendererObj.drawString("Stored Energy : ",27,45,0x00ffffff);
-                this.fontRendererObj.drawString(String.format("% 11d",tileAccCore.storedEnergyInt)+" EU",27,55,0x00ffffff);
-                this.fontRendererObj.drawString("Stored UU Matter : ",27,65,0x00ffffff);
-                this.fontRendererObj.drawString(String.format("% 11d",tileAccCore.uuStored)+" mB",27,75,0x00ffffff);
+                this.fontRendererObj.drawString("Stored UU Matter : ",27,45,0x00ffffff);
+                this.fontRendererObj.drawString(String.format("% 16d",tileAccCore.uuStored)+" mB",27,55,0x00ffffff);
+                this.fontRendererObj.drawString("Used Energy : ",27,65,0x00ffffff);
+                this.fontRendererObj.drawString(String.format("% 16d",tileAccCore.storedEnergyInt)+" EU",27,75,0x00ffffff);
                 this.fontRendererObj.drawString("Last Energy per UUM : ",27,85,0x00ffffff);
-                this.fontRendererObj.drawString(String.format("% 11d",tileAccCore.lastConsumedEnergy)+" EU",27,95,0x00ffffff);
+                this.fontRendererObj.drawString(String.format("% 16d",tileAccCore.lastConsumedEnergy)+" EU",27,95,0x00ffffff);
 
         }
 

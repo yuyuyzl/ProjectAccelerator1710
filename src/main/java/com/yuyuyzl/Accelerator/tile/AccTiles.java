@@ -13,6 +13,7 @@ public class AccTiles {
         GameRegistry.registerTileEntity(TileAccHull.class,MODID+":TileAccHull");
         GameRegistry.registerTileEntity(TileAccEnergy.class,MODID+":TileAccEnergy");
         GameRegistry.registerTileEntity(TileAccFluid.class,MODID+":TileAccFluid");
+        GameRegistry.registerTileEntity(TileAccCoolant.class,MODID+":TileAccCoolant");
 
     }
 }
