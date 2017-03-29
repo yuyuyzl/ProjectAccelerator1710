@@ -17,6 +17,8 @@ public class Config {
     //Declare all configuration fields used by the mod here
     public static double kAcceleration;
     public static double kOverall;
+    public static double kFail;
+    public static double kStabilizer;
 
     public static final String CATEGORY_NAME_GENERAL = "category_general";
     public static final String CATEGORY_NAME_OTHER = "category_other";
@@ -194,6 +196,22 @@ public class Config {
                 KO_DEFAULT_VALUE, "Factor of the overall EU consuming",
                 KO_MIN_VALUE, KO_MAX_VALUE);
         pkOverall.setLanguageKey("gui.kOverall");
+
+        final double KF_MIN_VALUE = 0.00000001;
+        final double KF_MAX_VALUE = 9999.0;
+        final double KF_DEFAULT_VALUE = 0.002;
+        Property pkFail = config.get(CATEGORY_NAME_GENERAL, "kFail",
+                KF_DEFAULT_VALUE, "Factor of the fail rate",
+                KF_MIN_VALUE, KF_MAX_VALUE);
+        pkOverall.setLanguageKey("gui.kFail");
+
+        final double KS_MIN_VALUE = 0.00000001;
+        final double KS_MAX_VALUE = 9999.0;
+        final double KS_DEFAULT_VALUE = 0.5;
+        Property pkStabilizer = config.get(CATEGORY_NAME_GENERAL, "kStabilizer",
+                KS_DEFAULT_VALUE, "Factor of the stabilizer",
+                KS_MIN_VALUE, KS_MAX_VALUE);
+        pkOverall.setLanguageKey("gui.kStabilizer");
         // ---- step 3 - read the configuration property values into the class's variables (if readFieldsFromConfig) -------------------
 
         // As each value is read from the property, it should be checked to make sure it is valid, in case someone
@@ -234,6 +252,14 @@ public class Config {
             if (kOverall > KO_MAX_VALUE || kOverall < KO_MIN_VALUE) {
                 kOverall = KO_DEFAULT_VALUE;
             }
+            kFail=pkFail.getDouble(KF_DEFAULT_VALUE);
+            if(kFail>KF_MAX_VALUE ||kFail<KF_MIN_VALUE){
+                kFail=KF_DEFAULT_VALUE;
+            }
+            kStabilizer=pkStabilizer.getDouble(KS_DEFAULT_VALUE);
+            if(kStabilizer>KS_MAX_VALUE ||kStabilizer<KS_MIN_VALUE){
+                kStabilizer=KS_DEFAULT_VALUE;
+            }
         }
 
         // ---- step 4 - write the class's variables back into the config properties and save to disk -------------------
@@ -245,6 +271,8 @@ public class Config {
         //propMyBool.set(myBoolean);
         pkAcceleration.set(kAcceleration);
         pkOverall.set(kOverall);
+        pkFail.set(kFail);
+        pkStabilizer.set(kStabilizer);
         //propMyString.set(myString);
         //propMyIntList.set(myIntList);
         //propColour.set(myColour);
