@@ -9,6 +9,7 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -512,7 +513,8 @@ public class TileAccCore extends TileEntity{
                     for (int i=0;i<CoolantPosX.size();i++){
                         if(worldObj.getTileEntity(CoolantPosX.get(i),CoolantPosY.get(i),CoolantPosZ.get(i))instanceof TileAccCoolant){
                             TileAccCoolant tile =(TileAccCoolant) worldObj.getTileEntity(CoolantPosX.get(i),CoolantPosY.get(i),CoolantPosZ.get(i));
-                            if(tile.drain(null,1,true)!=null){
+                            FluidStack f= tile.drain(null,5,true);
+                            if(f!=null && f.amount==5){
                                 numStablizer++;
                             }
                         }else{

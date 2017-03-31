@@ -14,6 +14,7 @@ public class AccTiles {
         GameRegistry.registerTileEntity(TileAccEnergy.class,MODID+":TileAccEnergy");
         GameRegistry.registerTileEntity(TileAccFluid.class,MODID+":TileAccFluid");
         GameRegistry.registerTileEntity(TileAccCoolant.class,MODID+":TileAccCoolant");
+        GameRegistry.registerTileEntity(TileBuildGuide.class,MODID+":TileBuildGuide");
 
     }
 }

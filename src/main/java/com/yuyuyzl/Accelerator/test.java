@@ -7,6 +7,6 @@ public class test {
     public static void main(String[] args) {
         int a=Integer.MAX_VALUE;
         a=a+100;
-        System.out.println(a);
+        System.out.println(null instanceof test);
     }
 }

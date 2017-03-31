@@ -1,12 +1,13 @@
 package com.yuyuyzl.Accelerator;
 
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import com.yuyuyzl.Accelerator.tile.TileBuildGuide;
+import com.yuyuyzl.Accelerator.tile.TileBuildGuideRenderer;
+import cpw.mods.fml.client.registry.ClientRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 
 /**
  * Created by user on 2016/5/28.
@@ -18,6 +19,7 @@ public class ClientProxy extends CommonProxy{
 }
     public void init(){
         super.init();
+        ClientRegistry.bindTileEntitySpecialRenderer(TileBuildGuide.class, new TileBuildGuideRenderer());
     }
     public void postInit(){
         super.postInit();

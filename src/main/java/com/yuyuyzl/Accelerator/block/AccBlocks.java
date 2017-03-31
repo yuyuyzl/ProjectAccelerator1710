@@ -19,6 +19,7 @@ public class AccBlocks {
     public static Block accCoolantBlock;
     public static Block accAdvHullBlock;
     public static Block accAdvTunnelBlock;
+    public static Block accBuildGuide;
 
     public static void init(){
         accMachineBlock=new AccMachineBlock().setBlockName("AccMachineBlock");
@@ -31,6 +32,7 @@ public class AccBlocks {
         accCoolantBlock=new AccCoolantBlock().setBlockName("AccCoolantBlock");
         accAdvHullBlock=new AccAdvMachineHull().setBlockName("AccAdvMachineHull");
         accAdvTunnelBlock=new AccAdvTunnel().setBlockName("AccAdvTunnel");
+        accBuildGuide=new AccBuildGuide().setBlockName("AccBuildGuide");
         GameRegistry.registerBlock(accMachineBlock,accMachineBlock.getUnlocalizedName());
         GameRegistry.registerBlock(accCoreBlock,accCoreBlock.getUnlocalizedName());
         GameRegistry.registerBlock(accHullBlock,accHullBlock.getUnlocalizedName());
@@ -41,6 +43,7 @@ public class AccBlocks {
         GameRegistry.registerBlock(accCoolantBlock,accCoolantBlock.getUnlocalizedName());
         GameRegistry.registerBlock(accAdvHullBlock,accAdvHullBlock.getUnlocalizedName());
         GameRegistry.registerBlock(accAdvTunnelBlock,accAdvTunnelBlock.getUnlocalizedName());
+        GameRegistry.registerBlock(accBuildGuide,accBuildGuide.getUnlocalizedName());
     }
 
 }
