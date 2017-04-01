@@ -2,29 +2,33 @@ package com.yuyuyzl.Accelerator.block;
 
 import com.yuyuyzl.Accelerator.tile.TileAccHull;
 import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
+import static com.yuyuyzl.Accelerator.AcceleratorMod.MODID;
+
 /**
  * Created by yuyuyzl on 2017/3/21.
  */
 public class AccMachineHull extends AccMachineBlock{
 
+    public IIcon HullTop,HullSide;
     @Override
-    public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase p_149689_5_, ItemStack p_149689_6_) {
+    public void registerBlockIcons(IIconRegister icon) {
+        super.registerBlockIcons(icon);
+
+        HullTop = icon.registerIcon(MODID + ":HullTopNormal");
+        HullSide = icon.registerIcon(MODID + ":HullSideNormal");
 
     }
 
-    //@Override
-    //public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {
-        //return new TileAccHull();
-    //}
-
-    @Override
     public IIcon getIcon(int facing, int meta) {
-        return empty;
+        if(facing==1)return HullTop;
+        if(facing==0)return square;
+        return HullSide;
     }
 }

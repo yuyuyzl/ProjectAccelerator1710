@@ -14,7 +14,7 @@ public class AccAdvTunnel extends AccAdvMachineBlock {
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         super.registerBlockIcons(icon);
-        stripe=icon.registerIcon(MODID + ":machine1_stripe");
+        stripe=icon.registerIcon(MODID + ":TunnelSideAdv");
     }
 
     @Override

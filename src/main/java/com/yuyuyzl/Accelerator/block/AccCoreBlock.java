@@ -39,8 +39,8 @@ public class AccCoreBlock extends AccMachineBlock implements ITileEntityProvider
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         super.registerBlockIcons(icon);
-        screen=icon.registerIcon(MODID+":machine_screen");
-        hole=icon.registerIcon(MODID+":machine_hole");
+        screen=icon.registerIcon(MODID+":Screen");
+        hole=icon.registerIcon(MODID+":BlockNormal");
     }
 
     public static final int[] dirtofac={2,5,3,4};

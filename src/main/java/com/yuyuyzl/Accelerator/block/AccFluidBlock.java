@@ -14,13 +14,18 @@ import static com.yuyuyzl.Accelerator.AcceleratorMod.MODID;
  */
 public class AccFluidBlock extends AccMachineBlock implements ITileEntityProvider{
 
+    public IIcon hole,HullTop;
+    @Override
+    public void registerBlockIcons(IIconRegister icon) {
+        super.registerBlockIcons(icon);
+        hole=icon.registerIcon(MODID+":UUMSide");
+        HullTop = icon.registerIcon(MODID + ":HullTopNormal");
+    }
     @Override
     public IIcon getIcon(int facing, int meta) {
-        if (facing==0 || facing==1){
-            return empty;
-        }else {
-            return square;
-        }
+        if(facing==0)return square;
+        if(facing==1)return square;
+        return hole;
     }
     @Override
     public TileEntity createNewTileEntity(World p_149915_1_, int p_149915_2_) {

@@ -10,15 +10,12 @@ import static com.yuyuyzl.Accelerator.AcceleratorMod.MODID;
  */
 public class AccAdvMachineBlock extends AccMachineBlock {
     public void registerBlockIcons(IIconRegister icon){
-        empty= icon.registerIcon(MODID + ":machine1_empty");
-        square = icon.registerIcon(MODID + ":machine1_square");
+        square = icon.registerIcon(MODID + ":BlockAdv");
     }
     @Override
     public IIcon getIcon(int facing, int meta) {
-        if (facing==0 || facing==1){
-            return empty;
-        }else {
+
             return square;
-        }
+
     }
 }

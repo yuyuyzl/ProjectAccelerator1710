@@ -15,12 +15,11 @@ public class AccTunnelBlock extends AccMachineBlock{
     @Override
     public void registerBlockIcons(IIconRegister icon) {
         super.registerBlockIcons(icon);
-        stripe=icon.registerIcon(MODID + ":machine_stripe");
+        stripe=icon.registerIcon(MODID + ":TunnelSideNormal");
     }
 
     @Override
     public IIcon getIcon(int facing, int meta) {
-        //return super.getIcon(facing, meta);
         if (facing==0 || facing==1){
             return square;
         }else {

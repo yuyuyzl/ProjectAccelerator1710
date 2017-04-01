@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
  */
 public class GuiAccCore extends GuiContainer{
 
-    public static final ResourceLocation guiTexture= new ResourceLocation("acceleratormod","textures/blocks/GUIAccMainbg1.png");
+    public static final ResourceLocation guiTexture= new ResourceLocation("acceleratormod","textures/blocks/GUIAccMainbg.png");
     private TileAccCore tileAccCore;
 
 
