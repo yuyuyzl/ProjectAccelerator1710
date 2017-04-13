@@ -1,6 +1,6 @@
 .gradle
 build/
-!build/libs/
+!AcceleratorMod*
 
 # Ignore Gradle GUI config
 gradle-app.setting
