@@ -1,6 +1,7 @@
 .gradle
 build/
-!AcceleratorMod*
+!build/libs
+!build/libs/
 
 # Ignore Gradle GUI config
 gradle-app.setting
@@ -70,3 +71,4 @@ $RECYCLE.BIN/
 bkup/
 
 eclipse/
+!/build/libs/AcceleratorMod-1.0.jar
