@@ -7,6 +7,7 @@ import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
+
 import java.io.File;
 
 /**
@@ -19,6 +20,8 @@ public class Config {
     public static double kOverall;
     public static double kFail;
     public static double kStabilizer;
+    public static double kTime;
+    public static String coolantName;
 
     public static final String CATEGORY_NAME_GENERAL = "category_general";
     public static final String CATEGORY_NAME_OTHER = "category_other";
@@ -203,7 +206,7 @@ public class Config {
         Property pkFail = config.get(CATEGORY_NAME_GENERAL, "kFail",
                 KF_DEFAULT_VALUE, "Factor of the fail rate",
                 KF_MIN_VALUE, KF_MAX_VALUE);
-        pkOverall.setLanguageKey("gui.kFail");
+        pkFail.setLanguageKey("gui.kFail");
 
         final double KS_MIN_VALUE = 0.00000001;
         final double KS_MAX_VALUE = 9999.0;
@@ -211,7 +214,20 @@ public class Config {
         Property pkStabilizer = config.get(CATEGORY_NAME_GENERAL, "kStabilizer",
                 KS_DEFAULT_VALUE, "Factor of the stabilizer",
                 KS_MIN_VALUE, KS_MAX_VALUE);
-        pkOverall.setLanguageKey("gui.kStabilizer");
+        pkStabilizer.setLanguageKey("gui.kStabilizer");
+
+        final double KT_MIN_VALUE = 0.00000001;
+        final double KT_MAX_VALUE = 9999.0;
+        final double KT_DEFAULT_VALUE = 0.1;
+        Property pkTime = config.get(CATEGORY_NAME_GENERAL, "kTime",
+                KT_DEFAULT_VALUE, "Factor of the time accelerator",
+                KT_MIN_VALUE, KT_MAX_VALUE);
+        pkTime.setLanguageKey("gui.kTime");
+
+        final String COOLANT_DEFAULT_VALUE = "water";
+        Property pcoolant = config.get(CATEGORY_NAME_GENERAL, "Coolant Fluid", COOLANT_DEFAULT_VALUE);
+        pcoolant.setLanguageKey("gui.coolant").setRequiresWorldRestart(true);
+
         // ---- step 3 - read the configuration property values into the class's variables (if readFieldsFromConfig) -------------------
 
         // As each value is read from the property, it should be checked to make sure it is valid, in case someone
@@ -260,6 +276,11 @@ public class Config {
             if(kStabilizer>KS_MAX_VALUE ||kStabilizer<KS_MIN_VALUE){
                 kStabilizer=KS_DEFAULT_VALUE;
             }
+            kTime=pkTime.getDouble(KT_DEFAULT_VALUE);
+            if(kTime>KT_MAX_VALUE ||kTime<KT_MIN_VALUE){
+                kTime=KT_DEFAULT_VALUE;
+            }
+            coolantName=pcoolant.getString();
         }
 
         // ---- step 4 - write the class's variables back into the config properties and save to disk -------------------
@@ -273,6 +294,8 @@ public class Config {
         pkOverall.set(kOverall);
         pkFail.set(kFail);
         pkStabilizer.set(kStabilizer);
+        pkTime.set(kTime);
+        pcoolant.set(coolantName);
         //propMyString.set(myString);
         //propMyIntList.set(myIntList);
         //propColour.set(myColour);

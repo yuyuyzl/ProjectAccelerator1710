@@ -1,5 +1,6 @@
 package com.yuyuyzl.Accelerator.tile;
 
+import com.yuyuyzl.Accelerator.Config;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -36,7 +37,7 @@ public class TileAccCoolant extends TileEntity implements IFluidHandler{
 
     @Override
     public boolean canFill(ForgeDirection from, Fluid fluid) {
-        return from==ForgeDirection.UP && fluid.getName().equals("water");
+        return from==ForgeDirection.UP && fluid.getName().equals(Config.coolantName);
     }
 
     @Override
