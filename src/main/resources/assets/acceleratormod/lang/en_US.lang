@@ -9,4 +9,5 @@ tile.AccAdvMachineBlock.name=Accelerator Advanced Machine Block
 tile.AccAdvMachineHull.name=Accelerator Advanced Hull
 tile.AccAdvTunnel.name=Accelerator Advanced Tunnel
 tile.AccBuildGuide.name=Accelerator Building Instructor
+tile.AccTimeBlock.name=Accelerator Time Accelerator
 itemGroup.accelerator=Project Accelerator

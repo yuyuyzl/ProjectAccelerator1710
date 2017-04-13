@@ -11,6 +11,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,6 +30,7 @@ public class TileAccCore extends TileEntity{
     private List<Integer> TunnelPosX=new ArrayList<Integer>(),TunnelPosY=new ArrayList<Integer>(),TunnelPosZ=new ArrayList<Integer>();
     //private List<Integer> AdvTunnelPosX=new ArrayList<Integer>(),AdvTunnelPosY=new ArrayList<Integer>(),AdvTunnelPosZ=new ArrayList<Integer>();
     private List<Integer> CoolantPosX=new ArrayList<Integer>(),CoolantPosY=new ArrayList<Integer>(),CoolantPosZ=new ArrayList<Integer>();
+    private List<Integer> TimePosX=new ArrayList<Integer>(),TimePosY=new ArrayList<Integer>(),TimePosZ=new ArrayList<Integer>();
 
     private int searchX,searchY,searchZ;
     private int psearchX,psearchY,psearchZ;
@@ -80,6 +82,9 @@ public class TileAccCore extends TileEntity{
                 CoolantPosX.clear();
                 CoolantPosY.clear();
                 CoolantPosZ.clear();
+                TimePosX.clear();
+                TimePosY.clear();
+                TimePosZ.clear();
                 /*
                 AdvTunnelPosX.clear();
                 AdvTunnelPosY.clear();
@@ -188,6 +193,8 @@ public class TileAccCore extends TileEntity{
                                 /*HullPosX.add(searchX + dirDeltaX[i]);
                                 HullPosY.add(searchY);
                                 HullPosZ.add(searchZ + dirDeltaZ[i]);*/
+
+
                             } else if (bls instanceof AccEnergyBlock) {
                                 EnergyPosX.add(searchX + dirDeltaX[i]);
                                 EnergyPosY.add(searchY);
@@ -222,6 +229,50 @@ public class TileAccCore extends TileEntity{
                             System.out.println("Failed3 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                             posReset = 40;
                             return;
+                        }
+                        if(px==searchX&&searchX==psearchX) {
+                            if (worldObj.getBlock(searchX, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+1, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-1, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+1, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-1, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+2, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-2, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+1, searchY - 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-1, searchY - 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+1, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-1, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+2, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-2, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX+2, searchY, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX-2, searchY, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 2, searchZ) instanceof AccTimeBlock) {
+                                TimePosX.add(searchX);
+                                TimePosY.add(searchY);
+                                TimePosZ.add(searchZ);
+                            }
+                        }
+                        if(pz==searchZ&&searchZ==psearchZ) {
+                            if (worldObj.getBlock(searchX, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 2, searchZ+1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 2, searchZ-1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 1, searchZ+1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 1, searchZ-1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 1, searchZ+1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY + 1, searchZ-2) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 2, searchZ+1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 2, searchZ-1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 1, searchZ+1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 1, searchZ-1) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 1, searchZ+2) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 1, searchZ-2) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY, searchZ+2) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY, searchZ-2) instanceof AccTimeBlock &&
+                                    worldObj.getBlock(searchX, searchY - 2, searchZ) instanceof AccTimeBlock) {
+                                TimePosX.add(searchX);
+                                TimePosY.add(searchY);
+                                TimePosZ.add(searchZ);
+                            }
                         }
                         if (count != 2) {
                             System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
@@ -364,6 +415,48 @@ public class TileAccCore extends TileEntity{
                         searchX=TunnelPosX.get(psearchX%TunnelPosX.size());
                         searchY=TunnelPosY.get(psearchX%TunnelPosY.size());
                         searchZ=TunnelPosZ.get(psearchX%TunnelPosZ.size());
+                        for (int i = 0; i < TimePosX.size(); i++) {
+                            if(searchX==TimePosX.get(i)&&searchY==TimePosY.get(i)&&searchZ==TimePosZ.get(i)){
+                                if (worldObj.getBlock(searchX, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+1, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-1, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+1, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-1, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+2, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-2, searchY + 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+1, searchY - 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-1, searchY - 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+1, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-1, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+2, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-2, searchY - 1, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX+2, searchY, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX-2, searchY, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 2, searchZ) instanceof AccTimeBlock) {
+
+                                }else if (worldObj.getBlock(searchX, searchY + 2, searchZ) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 2, searchZ+1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 2, searchZ-1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 1, searchZ+1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 1, searchZ-1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 1, searchZ+1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY + 1, searchZ-2) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 2, searchZ+1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 2, searchZ-1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 1, searchZ+1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 1, searchZ-1) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 1, searchZ+2) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 1, searchZ-2) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY, searchZ+2) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY, searchZ-2) instanceof AccTimeBlock &&
+                                        worldObj.getBlock(searchX, searchY - 2, searchZ) instanceof AccTimeBlock) {
+
+                                }else {
+                                    posReset = 40;
+                                    return;
+                                }
+                            }
+                        }
                         if(worldObj.getBlock(searchX,searchY,searchZ)instanceof AccTunnelBlock){
                             {
                                 int count = 0, px = 0, pz = 0;
@@ -522,7 +615,9 @@ public class TileAccCore extends TileEntity{
                             return;
                         }
                     }
-                    accProgress+=calculateAcceleration(drag,energyIn, Config.kAcceleration,Config.kOverall,numStablizer,failrate,Config.kStabilizer);
+                    double timeMultiplier=2*TimePosX.size();
+                    timeMultiplier=(timeMultiplier==0)?1:timeMultiplier;
+                    accProgress+=calculateAcceleration(drag,energyIn/timeMultiplier, Config.kAcceleration,Config.kOverall*timeMultiplier,numStablizer,failrate,Config.kStabilizer);
                     if (accProgress<0)accProgress=0;
                     if (accProgress>=100){
                         accProgress-=100;
@@ -631,6 +726,9 @@ public class TileAccCore extends TileEntity{
         CoolantPosX=toArrayListInt(compound.getIntArray("coolantx"));
         CoolantPosY=toArrayListInt(compound.getIntArray("coolanty"));
         CoolantPosZ=toArrayListInt(compound.getIntArray("coolantz"));
+        TimePosX=toArrayListInt(compound.getIntArray("timeposx"));
+        TimePosY=toArrayListInt(compound.getIntArray("timeposy"));
+        TimePosZ=toArrayListInt(compound.getIntArray("timeposz"));
         /*
         AdvTunnelPosX=toArrayListInt(compound.getIntArray("advtunnelx"));
         AdvTunnelPosY=toArrayListInt(compound.getIntArray("advtunnely"));
@@ -672,6 +770,9 @@ public class TileAccCore extends TileEntity{
         compound.setIntArray("coolantx", toIntArray(CoolantPosX));
         compound.setIntArray("coolanty", toIntArray(CoolantPosY));
         compound.setIntArray("coolantz", toIntArray(CoolantPosZ));
+        compound.setIntArray("timeposx", toIntArray(TimePosX));
+        compound.setIntArray("timeposy", toIntArray(TimePosY));
+        compound.setIntArray("timeposz", toIntArray(TimePosZ));
         /*
         compound.setIntArray("advtunnelx",toIntArray(AdvTunnelPosX));
         compound.setIntArray("advtunnely",toIntArray(AdvTunnelPosY));
