@@ -1,0 +1,13 @@
+tile.AccMachineBlock.name=粒子加速器机器方块
+tile.AccCoreBlock.name=粒子加速器核心
+tile.AccHullBlock.name=粒子加速器机壳
+tile.AccTunnelBlock.name=粒子加速器通道
+tile.AccEnergyBlock.name=粒子加速器能量输出口
+tile.AccFluidBlock.name=粒子加速器液体输出口
+tile.AccCoolantBlock.name=粒子加速器冷却剂输入口
+tile.AccAdvMachineBlock.name=粒子加速器高级机器方块
+tile.AccAdvMachineHull.name=粒子加速器高级机壳
+tile.AccAdvTunnel.name=粒子加速器高级通道
+tile.AccBuildGuide.name=粒子加速器建筑指导机
+tile.AccTimeBlock.name=粒子加速器时间加速器
+itemGroup.accelerator=Project Accelerator
