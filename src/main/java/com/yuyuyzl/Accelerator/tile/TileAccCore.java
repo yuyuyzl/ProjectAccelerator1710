@@ -36,9 +36,11 @@ public class TileAccCore extends TileEntity{
     public int stat=0;
 
     public double storedEnergy=0;
-    public int storedEnergyInt=0;
-    public int lastConsumedEnergy=0;
+    public int guiField1 =0;//storedInt
+    public int guiField3 =0;//lastConsumed
     public int uuStored=0;
+    public int guiField2 =0;//storedIntH
+    public int guiField4 =0;//lastConsumedH
     public double drag=0;
     public double failrate=1;
     public double accProgress=0;
@@ -50,6 +52,14 @@ public class TileAccCore extends TileEntity{
     private final int dirDeltaZ[]={1,0,-1,0};
     public int posReset=0;
     public int waitT=0;
+
+    private void doFail(int px,int py,int pz){
+        posReset=10000;
+        guiField1=px;
+        guiField2=py;
+        guiField3=pz;
+    }
+
     @Override
     public void updateEntity() {
         super.updateEntity();
@@ -59,7 +69,8 @@ public class TileAccCore extends TileEntity{
                 return;
             }
             if (posReset > 0) {
-                posReset--;
+                //posReset--;
+                stat=4;
                 return;
             }
             if (posReset == 0) {
@@ -88,8 +99,8 @@ public class TileAccCore extends TileEntity{
                 AdvTunnelPosY.clear();
                 AdvTunnelPosZ.clear();*/
                 storedEnergy=0;
-                storedEnergyInt=0;
-                lastConsumedEnergy=0;
+                guiField1 =0;
+                guiField3 =0;
                 uuStored=0;
                 searchX = xCoord + dirDeltaX[dir];
                 searchY = yCoord;
@@ -129,7 +140,7 @@ public class TileAccCore extends TileEntity{
                                 FluidPosY.add(searchY);
                                 FluidPosZ.add(searchZ+dirDeltaZ[i]);
                             }else if(searchX + dirDeltaX[i]!=xCoord ||searchZ+dirDeltaZ[i]!=zCoord) {
-                                posReset = 40;
+                                doFail(searchX + dirDeltaX[i],searchY,searchZ+dirDeltaZ[i]);
                                 return;
                             }
                         }
@@ -139,7 +150,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY+1);
                             HullPosZ.add(searchZ);*/
                         }else{
-                            posReset = 40;
+                            doFail(searchX,searchY+1,searchZ);
                             return;
                         }
                         if(worldObj.getBlock(searchX, searchY-1, searchZ) instanceof AccMachineHull||
@@ -148,7 +159,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY-1);
                             HullPosZ.add(searchZ);*/
                         }else{
-                            posReset = 40;
+                            doFail(searchX,searchY-1,searchZ);
                             return;
                         }
                         if (count == 2) {
@@ -165,11 +176,11 @@ public class TileAccCore extends TileEntity{
 
 
                         } else {
-                            posReset = 40;
+                            doFail(searchX,searchY,searchZ);
                             return;
                         }
                     }else {
-                        posReset = 40;
+                        doFail(searchX,searchY,searchZ);
                         return;
                     }
                     break;
@@ -203,7 +214,7 @@ public class TileAccCore extends TileEntity{
                                 FluidPosZ.add(searchZ + dirDeltaZ[i]);
                             } else if (searchX + dirDeltaX[i] != xCoord || searchZ + dirDeltaZ[i] != zCoord) {
                                 //System.out.println("Failed1 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                                posReset = 40;
+                                doFail(searchX + dirDeltaX[i],searchY,searchZ+dirDeltaZ[i]);
                                 return;
                             }
 
@@ -215,7 +226,7 @@ public class TileAccCore extends TileEntity{
                             HullPosZ.add(searchZ);*/
                         } else {
                             //System.out.println("Failed2 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                            posReset = 40;
+                            doFail(searchX,searchY+1,searchZ);
                             return;
                         }
                         if (worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccMachineHull ||
@@ -225,7 +236,7 @@ public class TileAccCore extends TileEntity{
                             HullPosZ.add(searchZ);*/
                         } else {
                             //System.out.println("Failed3 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                            posReset = 40;
+                            doFail(searchX,searchY-1,searchZ);
                             return;
                         }
                         if(px==searchX&&searchX==psearchX) {
@@ -274,7 +285,7 @@ public class TileAccCore extends TileEntity{
                         }
                         if (count != 2) {
                             //System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                            posReset = 40;
+                            doFail(searchX,searchY,searchZ);
                             return;
                         } else {
                             TunnelPosX.add(searchX);
@@ -318,15 +329,15 @@ public class TileAccCore extends TileEntity{
                                 if(bls instanceof AccAdvTunnel)advcount++;
                             }else if(bls instanceof AccAdvMachineHull){
                                 if(!(worldObj.getBlock(searchX + dirDeltaX[i], searchY+1, searchZ + dirDeltaZ[i]) instanceof AccAdvMachineHull)){
-                                    posReset = 40;
+                                    doFail(searchX + dirDeltaX[i],searchY+1,searchZ+dirDeltaZ[i]);
                                     return;
                                 }if(!(worldObj.getBlock(searchX + dirDeltaX[i], searchY-1, searchZ + dirDeltaZ[i]) instanceof AccAdvMachineHull)){
-                                    posReset = 40;
+                                    doFail(searchX + dirDeltaX[i],searchY-1,searchZ+dirDeltaZ[i]);
                                     return;
                                 }
 
                             }else {
-                                posReset = 40;
+                                doFail(searchX + dirDeltaX[i],searchY,searchZ+dirDeltaZ[i]);
                                 return;
                             }
                         }
@@ -335,7 +346,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY+1);
                             HullPosZ.add(searchZ);*/
                         }else{
-                            posReset = 40;
+                            doFail(searchX,searchY+1,searchZ);
                             return;
                         }
                         if(worldObj.getBlock(searchX, searchY+2, searchZ) instanceof AccAdvMachineHull){
@@ -350,7 +361,7 @@ public class TileAccCore extends TileEntity{
                             CoolantPosY.add(searchY+2);
                             CoolantPosZ.add(searchZ);
                         }else {
-                            posReset = 40;
+                            doFail(searchX,searchY+2,searchZ);
                             return;
                         }
 
@@ -359,7 +370,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY-1);
                             HullPosZ.add(searchZ);*/
                         }else{
-                            posReset = 40;
+                            doFail(searchX,searchY-1,searchZ);
                             return;
                         }
                         if(worldObj.getBlock(searchX, searchY-2, searchZ) instanceof AccAdvMachineHull){
@@ -367,12 +378,12 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY-1);
                             HullPosZ.add(searchZ);*/
                         }else{
-                            posReset = 40;
+                            doFail(searchX,searchY-2,searchZ);
                             return;
                         }
                         if (count != 2) {
                             //System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                            posReset = 40;
+                            doFail(searchX,searchY,searchZ);
                             return;
                         } else {
                             TunnelPosX.add(searchX);
@@ -401,7 +412,7 @@ public class TileAccCore extends TileEntity{
 
                         }
                     }else{
-                        posReset=40;
+                        doFail(searchX,searchY,searchZ);
                         return;
                     }
                     break;
@@ -450,7 +461,7 @@ public class TileAccCore extends TileEntity{
                                         worldObj.getBlock(searchX, searchY - 2, searchZ) instanceof AccTimeBlock) {
 
                                 }else {
-                                    posReset = 40;
+                                    doFail(searchX,searchY,searchZ);
                                     return;
                                 }
                             }
@@ -473,7 +484,7 @@ public class TileAccCore extends TileEntity{
 
                                     } else if (bls instanceof AccFluidBlock) {
                                     } else if (searchX + dirDeltaX[i] != xCoord || searchZ + dirDeltaZ[i] != zCoord) {
-                                        posReset = 40;
+                                        doFail(searchX + dirDeltaX[i],searchY,searchZ+dirDeltaZ[i]);
                                         return;
                                     }
 
@@ -482,19 +493,19 @@ public class TileAccCore extends TileEntity{
                                         worldObj.getBlock(searchX, searchY + 1, searchZ) instanceof AccAdvMachineHull) {
 
                                 } else {
-                                    posReset = 40;
+                                    doFail(searchX,searchY+1,searchZ);
                                     return;
                                 }
                                 if (worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccMachineHull ||
                                         worldObj.getBlock(searchX, searchY - 1, searchZ) instanceof AccAdvMachineHull) {
 
                                 } else {
-                                    posReset = 40;
+                                    doFail(searchX,searchY-1,searchZ);
                                     return;
                                 }
                                 if (count != 2) {
                                     //System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                                    posReset = 40;
+                                    doFail(searchX,searchY,searchZ);
                                     return;
                                 }
 
@@ -513,15 +524,15 @@ public class TileAccCore extends TileEntity{
                                     count++;
                                 }else if(bls instanceof AccAdvMachineHull){
                                     if(!(worldObj.getBlock(searchX + dirDeltaX[i], searchY+1, searchZ + dirDeltaZ[i]) instanceof AccAdvMachineHull)){
-                                        posReset = 40;
+                                        doFail(searchX + dirDeltaX[i],searchY+1,searchZ+dirDeltaZ[i]);
                                         return;
                                     }if(!(worldObj.getBlock(searchX + dirDeltaX[i], searchY-1, searchZ + dirDeltaZ[i]) instanceof AccAdvMachineHull)){
-                                        posReset = 40;
+                                        doFail(searchX + dirDeltaX[i],searchY-1,searchZ+dirDeltaZ[i]);
                                         return;
                                     }
 
                                 }else {
-                                    posReset = 40;
+                                    doFail(searchX + dirDeltaX[i],searchY,searchZ+dirDeltaZ[i]);
                                     return;
                                 }
                             }
@@ -530,7 +541,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY+1);
                             HullPosZ.add(searchZ);*/
                             }else{
-                                posReset = 40;
+                                doFail(searchX,searchY+1,searchZ);
                                 return;
                             }
                             if(worldObj.getBlock(searchX, searchY+2, searchZ) instanceof AccAdvMachineHull){
@@ -540,7 +551,7 @@ public class TileAccCore extends TileEntity{
                             }else if((worldObj.getBlock(searchX, searchY+2, searchZ) instanceof AccCoolantBlock)){
 
                             }else {
-                                posReset = 40;
+                                doFail(searchX,searchY+2,searchZ);
                                 return;
                             }
 
@@ -549,7 +560,7 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY-1);
                             HullPosZ.add(searchZ);*/
                             }else{
-                                posReset = 40;
+                                doFail(searchX,searchY-1,searchZ);
                                 return;
                             }
                             if(worldObj.getBlock(searchX, searchY-2, searchZ) instanceof AccAdvMachineHull){
@@ -557,18 +568,18 @@ public class TileAccCore extends TileEntity{
                             HullPosY.add(searchY-1);
                             HullPosZ.add(searchZ);*/
                             }else{
-                                posReset = 40;
+                                doFail(searchX,searchY-2,searchZ);
                                 return;
                             }
                             if (count != 2) {
                                 //System.out.println("Failed @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
-                                posReset = 40;
+                                doFail(searchX,searchY,searchZ);
                                 return;
                             }
 
 
                         } else {
-                            posReset=40;
+                            doFail(searchX,searchY,searchZ);
                             return;
                             //System.out.println("Failed1 @"+String.valueOf(searchX)+","+String.valueOf(searchZ));
                         }
@@ -594,7 +605,8 @@ public class TileAccCore extends TileEntity{
                                 energyIn += te.getAllEnergy();
                             }
                         }else {
-                            posReset=40;
+                            doFail(EnergyPosX.get(i),EnergyPosY.get(i),EnergyPosZ.get(i));
+                            return;
                         }
                     }
                     //if(worldObj.getWorldTime()%10==0)System.out.println(String.valueOf(storedEnergy));
@@ -609,7 +621,7 @@ public class TileAccCore extends TileEntity{
                                 numStablizer++;
                             }
                         }else{
-                            posReset=40;
+                            doFail(CoolantPosX.get(i),CoolantPosY.get(i),CoolantPosZ.get(i));
                             return;
                         }
                     }
@@ -618,7 +630,7 @@ public class TileAccCore extends TileEntity{
                     if (accProgress<0)accProgress=0;
                     if (accProgress>=100){
                         accProgress-=100;
-                        lastConsumedEnergy=(int)storedEnergy;
+                        guiField3 =(int)storedEnergy;
                         storedEnergy=0;
                         uuStored++;
                     }
@@ -630,7 +642,8 @@ public class TileAccCore extends TileEntity{
                                 uuStored--;
                             }
                         }else {
-                            posReset=40;
+                            doFail(FluidPosX.get(i),FluidPosY.get(i),FluidPosZ.get(i));
+                            return;
                         }
                     }
 
@@ -740,7 +753,10 @@ public class TileAccCore extends TileEntity{
         psearchZ=compound.getInteger("psearchz");
         storedEnergy=compound.getDouble("storedenergy");
         EUperUU=compound.getDouble("euperuu");
-        lastConsumedEnergy=compound.getInteger("lastconsumedenergy");
+        guiField1=compound.getInteger("gui1");
+        guiField2=compound.getInteger("gui2");
+
+        guiField3 =compound.getInteger("lastconsumedenergy");
         uuStored=compound.getInteger("uustored");
         drag=compound.getDouble("drag");
         failrate=compound.getDouble("failrate");
@@ -785,7 +801,9 @@ public class TileAccCore extends TileEntity{
         compound.setDouble("storedenergy",storedEnergy);
         compound.setDouble("euperuu",EUperUU);
         compound.setInteger("uustored",uuStored);
-        compound.setInteger("lastconsumedenergy",lastConsumedEnergy);
+        compound.setInteger("lastconsumedenergy", guiField3);
+        compound.setInteger("gui1", guiField1);
+        compound.setInteger("gui2", guiField2);
         compound.setDouble("drag",drag);
         compound.setDouble("failrate",failrate);
         compound.setDouble("accprogress",accProgress);

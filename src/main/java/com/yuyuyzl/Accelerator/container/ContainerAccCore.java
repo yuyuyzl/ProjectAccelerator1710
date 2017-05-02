@@ -5,7 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
 
 import java.util.List;
 
@@ -32,11 +31,21 @@ public class ContainerAccCore extends Container{
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         for(ICrafting iCrafting:(List<ICrafting>)this.crafters){
+
             iCrafting.sendProgressBarUpdate(this,0,tile.stat);
-            iCrafting.sendProgressBarUpdate(this,1,(int)tile.storedEnergy);
-            iCrafting.sendProgressBarUpdate(this,2,(int)(tile.accProgress*100));
-            iCrafting.sendProgressBarUpdate(this,3,tile.uuStored);
-            iCrafting.sendProgressBarUpdate(this,4,tile.lastConsumedEnergy);
+            if(tile.stat==4){
+                iCrafting.sendProgressBarUpdate(this, 1, tile.guiField1);
+                iCrafting.sendProgressBarUpdate(this, 5, tile.guiField2);
+                iCrafting.sendProgressBarUpdate(this, 4, tile.guiField3);
+            }else {
+                iCrafting.sendProgressBarUpdate(this, 1, ((int) tile.storedEnergy) % 32768);
+                iCrafting.sendProgressBarUpdate(this, 2, (int) (tile.accProgress * 100));
+                iCrafting.sendProgressBarUpdate(this, 3, tile.uuStored);
+                iCrafting.sendProgressBarUpdate(this, 4, tile.guiField3 % 32768);
+                iCrafting.sendProgressBarUpdate(this, 5, ((int) tile.storedEnergy) / 32768);
+                iCrafting.sendProgressBarUpdate(this, 6, tile.guiField3 / 32768);
+            }
+
         }
     }
 
@@ -47,14 +56,19 @@ public class ContainerAccCore extends Container{
         switch (id){
             case 0:tile.stat=data;
                 break;
-            case 1:tile.storedEnergyInt=data;
+            case 1:tile.guiField1 =data;
                 break;
             case 2:tile.accProgressInt=data;
                 break;
             case 3:tile.uuStored=data;
                 break;
-            case 4:tile.lastConsumedEnergy=data;
+            case 4:tile.guiField3 =data;
                 break;
+            case 5:tile.guiField2 =data;
+                break;
+            case 6:tile.guiField4 =data;
+                break;
+
         }
 
     }
