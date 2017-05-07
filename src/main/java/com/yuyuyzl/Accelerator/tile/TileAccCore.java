@@ -36,13 +36,15 @@ public class TileAccCore extends TileEntity{
     public int stat=0;
 
     public double storedEnergy=0;
-    public int guiField1 =0;//storedInt
-    public int guiField3 =0;//lastConsumed
+    public int guiField1 =0;//storedInt, FailX
+    public int guiField3 =0;//lastConsumed, FailZ
     public int uuStored=0;
-    public int guiField2 =0;//storedIntH
+    public int guiField2 =0;//storedIntH, FailY
     public int guiField4 =0;//lastConsumedH
     public double drag=0;
     public double failrate=1;
+    public double dragUI=0;
+    public double failrateUI=0;
     public double accProgress=0;
     public int accProgressInt=0;
     public double EUperUU=1000000;
@@ -63,6 +65,7 @@ public class TileAccCore extends TileEntity{
     @Override
     public void updateEntity() {
         super.updateEntity();
+        double energyIn=0;
         if(!worldObj.isRemote) {
             if(waitT>0&&stat!=3){
                 waitT--;
@@ -415,6 +418,22 @@ public class TileAccCore extends TileEntity{
                         doFail(searchX,searchY,searchZ);
                         return;
                     }
+                    //clear all Energy inputs
+
+
+                    for (int i=0;i<EnergyPosX.size();i++){
+                        if(worldObj.getTileEntity(EnergyPosX.get(i),EnergyPosY.get(i),EnergyPosZ.get(i)) instanceof TileAccEnergy) {
+                            TileAccEnergy te = (TileAccEnergy) worldObj.getTileEntity(EnergyPosX.get(i), EnergyPosY.get(i), EnergyPosZ.get(i));
+                            if (te != null) {
+                                energyIn += te.getAllEnergy();
+                            }
+                        }else {
+                            doFail(EnergyPosX.get(i),EnergyPosY.get(i),EnergyPosZ.get(i));
+                            return;
+                        }
+                    }
+
+
                     break;
                 case 3:
                     if(waitT>0){
@@ -597,7 +616,7 @@ public class TileAccCore extends TileEntity{
                     }
 
                     //process acceleration here
-                    double energyIn=0;
+
                     for (int i=0;i<EnergyPosX.size();i++){
                         if(worldObj.getTileEntity(EnergyPosX.get(i),EnergyPosY.get(i),EnergyPosZ.get(i)) instanceof TileAccEnergy) {
                             TileAccEnergy te = (TileAccEnergy) worldObj.getTileEntity(EnergyPosX.get(i), EnergyPosY.get(i), EnergyPosZ.get(i));

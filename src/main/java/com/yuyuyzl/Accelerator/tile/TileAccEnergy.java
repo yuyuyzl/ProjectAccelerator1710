@@ -39,6 +39,7 @@ public class TileAccEnergy extends TileEntity {
 
     @Override
     public void updateEntity() {
+        //ic2EnergySink.setEnergyStored(0);
         ic2EnergySink.updateEntity(); // notify the energy sink
 
 

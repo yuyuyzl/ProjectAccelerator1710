@@ -21,7 +21,7 @@ public class AccAdvMachineHull extends AccAdvMachineBlock {
 
     public IIcon getIcon(int facing, int meta) {
         if(facing==1)return HullTop;
-        if(facing==0)return square;
+        if(facing==0)return HullTop;
         return HullSide;
     }
 }

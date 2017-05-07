@@ -33,17 +33,20 @@ public class ContainerAccCore extends Container{
         for(ICrafting iCrafting:(List<ICrafting>)this.crafters){
 
             iCrafting.sendProgressBarUpdate(this,0,tile.stat);
-            if(tile.stat==4){
+            if(tile.stat==4){ //fail
                 iCrafting.sendProgressBarUpdate(this, 1, tile.guiField1);
                 iCrafting.sendProgressBarUpdate(this, 5, tile.guiField2);
                 iCrafting.sendProgressBarUpdate(this, 4, tile.guiField3);
-            }else {
+            }else { //Normal
                 iCrafting.sendProgressBarUpdate(this, 1, ((int) tile.storedEnergy) % 32768);
                 iCrafting.sendProgressBarUpdate(this, 2, (int) (tile.accProgress * 100));
                 iCrafting.sendProgressBarUpdate(this, 3, tile.uuStored);
                 iCrafting.sendProgressBarUpdate(this, 4, tile.guiField3 % 32768);
                 iCrafting.sendProgressBarUpdate(this, 5, ((int) tile.storedEnergy) / 32768);
                 iCrafting.sendProgressBarUpdate(this, 6, tile.guiField3 / 32768);
+                iCrafting.sendProgressBarUpdate(this, 7, (int)(tile.failrate*1000));
+                iCrafting.sendProgressBarUpdate(this, 8, (int)(tile.drag*10000));
+                //System.out.println((int)(tile.drag*10000));
             }
 
         }
@@ -67,6 +70,11 @@ public class ContainerAccCore extends Container{
             case 5:tile.guiField2 =data;
                 break;
             case 6:tile.guiField4 =data;
+                break;
+            case 7:tile.failrateUI=((double)data)/1000;
+                break;
+            case 8:tile.dragUI=((double)data)/10000;
+                //System.out.println(data);
                 break;
 
         }

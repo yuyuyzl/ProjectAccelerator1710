@@ -41,6 +41,9 @@ public class GuiAccCore extends GuiContainer{
                 this.fontRendererObj.drawString(String.format("% 16d",tileAccCore.guiField1 +tileAccCore.guiField2 *32768)+" EU",27,75,0x00ffffff);
                 this.fontRendererObj.drawString("Last Energy per UUM : ",27,85,0x00ffffff);
                 this.fontRendererObj.drawString(String.format("% 16d",tileAccCore.guiField3 +tileAccCore.guiField4 *32768)+" EU",27,95,0x00ffffff);
+                this.fontRendererObj.drawString("System Info : ",27,105,0x00ffffff);
+                this.fontRendererObj.drawString(String.format("   Drag = % 4.4f",tileAccCore.dragUI),27,115,0x00ffffff);
+                this.fontRendererObj.drawString(String.format("   Fail = % 4.1f",tileAccCore.failrateUI*100)+"%",27,125,0x00ffffff);
                 break;
             case 4:
                 this.fontRendererObj.drawString("Failed.",27,25,0x00ffffff);

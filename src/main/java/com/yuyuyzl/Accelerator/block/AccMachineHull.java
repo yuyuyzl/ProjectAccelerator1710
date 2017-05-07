@@ -1,13 +1,7 @@
 package com.yuyuyzl.Accelerator.block;
 
-import com.yuyuyzl.Accelerator.tile.TileAccHull;
-import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.world.World;
 
 import static com.yuyuyzl.Accelerator.AcceleratorMod.MODID;
 
@@ -28,7 +22,7 @@ public class AccMachineHull extends AccMachineBlock{
 
     public IIcon getIcon(int facing, int meta) {
         if(facing==1)return HullTop;
-        if(facing==0)return square;
+        if(facing==0)return HullTop;
         return HullSide;
     }
 }

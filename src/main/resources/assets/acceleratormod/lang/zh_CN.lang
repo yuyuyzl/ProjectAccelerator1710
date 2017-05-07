@@ -10,4 +10,6 @@ tile.AccAdvMachineHull.name=粒子加速器高级机壳
 tile.AccAdvTunnel.name=粒子加速器高级通道
 tile.AccBuildGuide.name=粒子加速器建筑指导机
 tile.AccTimeBlock.name=粒子加速器时间加速器
+tile.AccFakeHullBlock.name=粒子加速器伪方块(机壳)
+tile.AccFakeAdvHullBlock.name=粒子加速器伪方块(高级机壳)
 itemGroup.accelerator=Project Accelerator
