@@ -21,6 +21,7 @@ public class Config {
     public static double kFail;
     public static double kStabilizer;
     public static double kTime;
+    public static double kDrag;
     public static String coolantName;
 
     public static final String CATEGORY_NAME_GENERAL = "category_general";
@@ -224,6 +225,14 @@ public class Config {
                 KT_MIN_VALUE, KT_MAX_VALUE);
         pkTime.setLanguageKey("gui.kTime");
 
+        final double KD_MIN_VALUE = 0.00000001;
+        final double KD_MAX_VALUE = 9999.0;
+        final double KD_DEFAULT_VALUE = 0.005;
+        Property pkDrag = config.get(CATEGORY_NAME_GENERAL, "kDrag",
+                KT_DEFAULT_VALUE, "The Value of the Constant Drag",
+                KT_MIN_VALUE, KT_MAX_VALUE);
+        pkDrag.setLanguageKey("gui.kDrag");
+
         final String COOLANT_DEFAULT_VALUE = "water";
         Property pcoolant = config.get(CATEGORY_NAME_GENERAL, "Coolant Fluid", COOLANT_DEFAULT_VALUE);
         pcoolant.setLanguageKey("gui.coolant").setRequiresWorldRestart(true);
@@ -280,6 +289,10 @@ public class Config {
             if(kTime>KT_MAX_VALUE ||kTime<KT_MIN_VALUE){
                 kTime=KT_DEFAULT_VALUE;
             }
+            kDrag=pkDrag.getDouble(KD_DEFAULT_VALUE);
+            if(kDrag>KD_MAX_VALUE ||kDrag<KD_MIN_VALUE){
+                kDrag=KD_DEFAULT_VALUE;
+            }
             coolantName=pcoolant.getString();
         }
 
@@ -296,6 +309,7 @@ public class Config {
         pkStabilizer.set(kStabilizer);
         pkTime.set(kTime);
         pcoolant.set(coolantName);
+        pkDrag.set(kDrag);
         //propMyString.set(myString);
         //propMyIntList.set(myIntList);
         //propColour.set(myColour);

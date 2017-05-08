@@ -686,6 +686,7 @@ public class TileAccCore extends TileEntity{
             avgX+=posListX.get(i);
             avgY+=posListY.get(i);
             avgZ+=posListZ.get(i);
+            //System.out.println(String.format("x%d,y%d,z%d",posListX.get(i),posListY.get(i),posListZ.get(i)));
         }
         avgX/=posListX.size();
         avgY/=posListX.size();
@@ -709,7 +710,7 @@ public class TileAccCore extends TileEntity{
         deltaDis=Math.sqrt(deltaDis);
         //System.out.println(String.valueOf(deltaDis*1000/avgDis/posListX.size()/posListX.size()));
         //System.out.println(Config.kOverall);
-        drag=deltaDis*1000/avgDis/posListX.size()/posListX.size();
+        drag=deltaDis*1000/avgDis/posListX.size()/posListX.size()+Config.kDrag;
         failrate=avgDis*avgDis*Config.kFail;
         return new AccProperty(drag,failrate);
     }
