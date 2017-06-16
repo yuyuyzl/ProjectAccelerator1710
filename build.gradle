@@ -79,6 +79,7 @@ dependencies {
     //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
     compile 'net.industrial-craft:industrialcraft-2:2.2.827-experimental:dev'
+    compile 'RebornCore:RebornCore:1.1.0.+:dev'
     //shade 'net.industrial-craft:industrialcraft-2:2.2.827-experimental:api'
     // for more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
